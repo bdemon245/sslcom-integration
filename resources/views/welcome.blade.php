@@ -21,8 +21,11 @@
                 src="{{ asset('assets/images/eniko-kis-KsLPTsYaqIQ-unsplash.jpg') }}" alt="">
         </div>
         <div class="col-span-1">
+            @php
+                $price = 255;
+            @endphp
             <h2 class="text-2xl font-bold text-slate-700">Lorem ipsum dolor sit</h2>
-            <div class="text-xl font-bold text-green-500">৳ 255</div>
+            <div class="text-xl font-bold text-green-500">৳ {{ $price }}</div>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit provident necessitatibus modi optio et
                 dicta iure sequi dolorum consequatur magnam voluptate, minus veniam repellat aliquam tenetur incidunt
                 asperiores corporis illo officia reiciendis recusandae nulla exercitationem</p>
@@ -38,16 +41,16 @@
                     </div>
                     <div class="w-max">
                         <span class="font-bold">x</span>
-                        <span class="text-xl font-bold">৳ 255</span>
+                        <span class="text-xl font-bold">৳ {{ $price }}</span>
                         <span class="font-bold"> = </span>
                         <span class="text-xl font-bold text-green-500">৳</span>
-                        <span class="text-xl font-bold text-green-500" id="total">255</span>
+                        <span class="text-xl font-bold text-green-500" id="total">{{ $price }}</span>
                     </div>
                 </div>
-                <form action="#" method="POST" class="mt-2">
+                <form action="{{ route('pay.index') }}" method="POST" class="mt-2">
                     @csrf
-                    <input type="hidden" name="item_count">
-                    <input type="hidden" name="total">
+                    <input type="hidden" name="item_count" value="1">
+                    <input type="hidden" name="total" value="{{ $price }}">
                     <button class="hover:bg-green-600  bg-green-500 rounded p-4 text-lg text-white font-bold w-full">Pay
                         with Nagad</button>
                 </form>
@@ -63,6 +66,8 @@
             calcTotal: function(count) {
                 this.total = count * this.value
                 this.target.innerHTML = this.total
+                form.itemCount.value = count;
+                form.total.value = this.total;
                 console.log(count);
             }
         }
