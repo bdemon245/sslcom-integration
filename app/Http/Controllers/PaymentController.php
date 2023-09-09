@@ -81,13 +81,9 @@ class PaymentController extends Controller
 
         $sslc = new SslCommerzNotification();
         # initiate(Transaction Data , false: Redirect to SSLCOMMERZ gateway/ true: Show all the Payement gateway here )
-        $payment_options = $sslc->makePayment($post_data, 'hosted');
-        dd($payment_options);
+        $redirectUrl = $sslc->makePayment($post_data, 'hosted');
 
-        if (!is_array($payment_options)) {
-            print_r($payment_options);
-            $payment_options = array();
-        }
+        return redirect($redirectUrl."?session_id=".$session_id);
     }
 
     public function payViaAjax(Request $request)
@@ -162,7 +158,7 @@ class PaymentController extends Controller
 
     public function success(Request $request)
     {
-        $value = $request->session()->pull('test-session');
+        $value = $request->query('session_id');
         dd($value);
         $tran_id = $request->input('tran_id');
         $amount = $request->input('amount');
