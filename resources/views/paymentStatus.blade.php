@@ -138,7 +138,7 @@
                     </svg>
                 </div>
                 <div class="text-xl font-bold text-green-600">
-                    Payment Successful!
+                    {{ $message }}
                 </div>
                 <div class="text-sm font-base text-center">Thank you for choosing us</div>
 
@@ -155,7 +155,7 @@
                     </svg>
                 </div>
                 <div class="text-xl font-bold text-red-600 text-center">
-                    Payment Failed!
+                    {{ $message }}
                 </div>
             </div>
         @endif
