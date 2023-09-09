@@ -76,11 +76,13 @@ class PaymentController extends Controller
                 'currency' => $post_data['currency']
             ]);
         #Create a session for request validation
-        $request->session()->put('test-session', 'test');
+        $session_id = uniqid('ssl_com_session_');
+    
 
         $sslc = new SslCommerzNotification();
         # initiate(Transaction Data , false: Redirect to SSLCOMMERZ gateway/ true: Show all the Payement gateway here )
         $payment_options = $sslc->makePayment($post_data, 'hosted');
+        dd($payment_options);
 
         if (!is_array($payment_options)) {
             print_r($payment_options);
