@@ -211,7 +211,7 @@ class PaymentController extends Controller
                     */
                     $update_product = DB::table('orders')
                         ->where('transaction_id', $tran_id)
-                        ->update(['status' => 'Completed']);
+                        ->update(['status' => 'Complete']);
 
                     echo "Transaction is successfully Completed";
                 }
