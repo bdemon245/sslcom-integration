@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Library\SslCommerz\SslCommerzNotification;
+use Illuminate\Support\Facades\Cookie;
 
 class PaymentController extends Controller
 {
@@ -77,13 +78,12 @@ class PaymentController extends Controller
             ]);
         #Create a session for request validation
         $session_id = uniqid('ssl_com_session_');
-    
-
+        $coockie = Cookie::make('ssl_payment', $session_id, 5, secure: true);
         $sslc = new SslCommerzNotification();
         # initiate(Transaction Data , false: Redirect to SSLCOMMERZ gateway/ true: Show all the Payement gateway here )
         $redirectUrl = $sslc->makePayment($post_data, 'hosted');
 
-        return redirect($redirectUrl."?session_id=".$session_id);
+        return redirect($redirectUrl . "?session_id=" . $session_id);
     }
 
     public function payViaAjax(Request $request)
@@ -158,7 +158,7 @@ class PaymentController extends Controller
 
     public function success(Request $request)
     {
-        $value = $request->query('session_id');
+        $value = Cookie::get('ssl_payment');
         dd($value);
         $tran_id = $request->input('tran_id');
         $amount = $request->input('amount');
