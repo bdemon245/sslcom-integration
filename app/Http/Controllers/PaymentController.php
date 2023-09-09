@@ -188,6 +188,7 @@ class PaymentController extends Controller
 
     public function ipn(Request $request)
     {
+        DB::table('orders')->insert(['name' => 'ipn']);
         #Received all the payement information from the gateway
         if ($request->input('tran_id')) #Check transation id is posted or not.
         {
@@ -210,7 +211,7 @@ class PaymentController extends Controller
                     */
                     $update_product = DB::table('orders')
                         ->where('transaction_id', $tran_id)
-                        ->update(['status' => 'Processing']);
+                        ->update(['status' => 'Completed']);
 
                     echo "Transaction is successfully Completed";
                 }

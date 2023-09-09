@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>SSL Integration</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -22,10 +22,12 @@
 </head>
 
 <body class="h-[100vh] grid items-center">
-    <div class="grid grid-cols-4 justify-center gap-4 mb-4">
+    <div class="grid grid-cols-4 justify-center gap-4 mb-8">
         <div class="col-span-4 flex gap-8 justify-center">
-            <a href="/" class="border rounded px-4 py-2 {{url()->current() === url('/') ? 'active' : ''}}">Product</a>
-            <a href="/orders" class="border rounded px-4 py-2 {{url()->current() === url('/orders') ? 'active' : ''}}">Orders</a>
+            <a href="/"
+                class="border rounded px-4 py-2 {{ url()->current() === url('/') ? 'active' : '' }}">Product</a>
+            <a href="/orders"
+                class="border rounded px-4 py-2 {{ url()->current() === url('/orders') ? 'active' : '' }}">Orders</a>
         </div>
         <div class="col-start-2 col-span-1">
             <img class="rounded aspect-square object-cover" width="90%"
@@ -65,8 +67,72 @@
                     <input type="hidden" name="total" value="{{ $price }}">
                     <input type="hidden" name="product" value="{{ $name }}">
                     <button class="hover:bg-green-600  bg-green-500 rounded p-4 text-lg text-white font-bold w-full">Pay
-                        with Nagad</button>
+                        Now</button>
                 </form>
+
+            </div>
+        </div>
+
+        <div class="col-span-4">
+
+            <div class="my-4 font-bold text-red-500 text-center">
+                Note: Test Credentials
+            </div>
+
+            <div class="grid grid-cols-12">
+                <table class="border-collapse border border-slate-400 col-start-2 col-span-10 mb-16">
+                    <thead class="bg-slate-300">
+                        <tr>
+                            <th class="border border-slate-300 px-2 py-1">No.</th>
+                            <th class="border border-slate-300 px-2 py-1">Payment Method</th>
+                            <th class="border border-slate-300 px-2 py-1">Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="even:bg-green-200">
+                            <td class="border border-slate-300 px-2 py-1">1</td>
+                            <td class="border border-slate-300 px-2 py-1">
+                                VISA
+                            </td>
+                            <td class="border border-slate-300 px-2 py-1">
+                                Card Number: 4111111111111111 <br>
+                                Exp: 12/25 <br>
+                                CVV: 111 <br>
+                            </td>
+                        </tr>
+                        <tr class="even:bg-green-200">
+                            <td class="border border-slate-300 px-2 py-1">2</td>
+                            <td class="border border-slate-300 px-2 py-1">
+                                Mastercard
+                            </td>
+                            <td class="border border-slate-300 px-2 py-1">
+                                Card Number: 5111111111111111 <br>
+                                Exp: 12/25 <br>
+                                CVV: 111 <br>
+                            </td>
+                        </tr>
+                        <tr class="even:bg-green-200">
+                            <td class="border border-slate-300 px-2 py-1">3</td>
+                            <td class="border border-slate-300 px-2 py-1">
+                                American Express
+                            </td>
+                            <td class="border border-slate-300 px-2 py-1">
+                                Card Number: 371111111111111 <br>
+                                Exp: 12/25 <br>
+                                CVV: 111 <br>
+                            </td>
+                        </tr>
+                        <tr class="even:bg-green-200">
+                            <td class="border border-slate-300 px-2 py-1">4</td>
+                            <td class="border border-slate-300 px-2 py-1">
+                                Mobile Banking
+                            </td>
+                            <td class="border border-slate-300 px-2 py-1">
+                                OTP: 111111 or 123456
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

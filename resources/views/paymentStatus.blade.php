@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="refresh" content="5;url=/">
 
-    <title>Laravel</title>
+    <title>Payment Status</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -127,7 +127,8 @@
 
 <body class="h-[100vh] flex flex-col justify-center">
 
-    <div class="w-max mx-auto p-16 border rounded rounded-2 shadow {{$success ? 'bg-green-200 border-green-600': 'bg-red-200 border-red-600'}}">
+    <div
+        class="w-max mx-auto p-16 border rounded rounded-2 shadow {{ $success ? 'bg-green-200 border-green-600' : 'bg-red-200 border-red-600' }}">
         @if ($success)
             <div class="">
                 <div class="success-animation">
