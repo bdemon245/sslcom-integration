@@ -75,6 +75,8 @@ class PaymentController extends Controller
                 'transaction_id' => $post_data['tran_id'],
                 'currency' => $post_data['currency']
             ]);
+        #Create a session for request validation
+        $request->session()->put('test-session', 'test');
 
         $sslc = new SslCommerzNotification();
         # initiate(Transaction Data , false: Redirect to SSLCOMMERZ gateway/ true: Show all the Payement gateway here )
@@ -158,10 +160,15 @@ class PaymentController extends Controller
 
     public function success(Request $request)
     {
-
+        $value = $request->session()->pull('test-session');
+        dd($value);
         $tran_id = $request->input('tran_id');
         $amount = $request->input('amount');
         $currency = $request->input('currency');
+        $data = [
+            'success' => true,
+            'message' => 'Payment Successful!'
+        ];
 
         $sslc = new SslCommerzNotification();
 
@@ -182,30 +189,32 @@ class PaymentController extends Controller
                 $update_product = DB::table('orders')
                     ->where('transaction_id', $tran_id)
                     ->update(['status' => 'Processing']);
-
-                return view('paymentStatus', [
-                    'success' => true
-                ]);
             }
         } else if ($order_details->status == 'Processing' || $order_details->status == 'Complete') {
             /*
              That means through IPN Order status already updated. Now you can just show the customer that transaction is completed. No need to udate database.
              */
-            return view('paymentStatus', [
-                'success' => true
-            ]);
+            $data = [
+                'success' => true,
+                'message' => 'Payment Already Successful!'
+            ];
         } else {
             #That means something wrong happened. You can redirect customer to your product page.
-            echo "Invalid Transaction";
+            $data = [
+                'success' => false,
+                'message' => 'Invalid Transaction'
+            ];
         }
-        return view('paymentStatus', [
-            'success' => true
-        ]);
+        return view('paymentStatus', $data);
     }
 
     public function fail(Request $request)
     {
         $tran_id = $request->input('tran_id');
+        $data = [
+            'success' => false,
+            'message' => 'Payment Failed!'
+        ];
 
         $order_details = DB::table('orders')
             ->where('transaction_id', $tran_id)
@@ -215,19 +224,18 @@ class PaymentController extends Controller
             $update_product = DB::table('orders')
                 ->where('transaction_id', $tran_id)
                 ->update(['status' => 'Failed']);
-            return view('paymentStatus', [
-                'success' => false
-            ]);
         } else if ($order_details->status == 'Processing' || $order_details->status == 'Complete') {
-            return view('paymentStatus', [
-                'success' => true
-            ]);
+            $data = [
+                'success' => true,
+                'message' => 'Payment Successful!'
+            ];
         } else {
-            echo "Transaction is Invalid";
+            $data = [
+                'success' => false,
+                'message' => 'Transaction Invalid!'
+            ];
         }
-        return view('paymentStatus', [
-            'success' => false
-        ]);
+        return view('paymentStatus', $data);
     }
 
     public function cancel(Request $request)
