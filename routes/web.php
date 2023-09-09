@@ -21,12 +21,10 @@ Route::get('/', function () {
 
 
 Route::name('pay.')
+->prefix('pay')
     ->controller(PaymentController::class)
     ->group(function () {
-        Route::get('/simple', 'simple')->name('simple');
-        Route::get('/simple-hosted', 'simpleHosted')->name('simpleHosted');
-        Route::post('/pay', 'index')->name('index');
-        Route::post('/pay-via-ajax', 'viaAjax')->name('viaAjax');
+        Route::post('/', 'index')->name('index');
         Route::post('/success', 'success')->name('success');
         Route::post('/fail', 'fail')->name('fail');
         Route::post('/cancel', 'cancel')->name('cancel');

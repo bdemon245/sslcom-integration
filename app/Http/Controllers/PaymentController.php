@@ -158,7 +158,6 @@ class PaymentController extends Controller
 
     public function success(Request $request)
     {
-        echo "Transaction is Successful";
 
         $tran_id = $request->input('tran_id');
         $amount = $request->input('amount');
@@ -195,6 +194,9 @@ class PaymentController extends Controller
             #That means something wrong happened. You can redirect customer to your product page.
             echo "Invalid Transaction";
         }
+        return view('paymentStatus', [
+            'success' => true
+        ]);
     }
 
     public function fail(Request $request)
@@ -215,6 +217,9 @@ class PaymentController extends Controller
         } else {
             echo "Transaction is Invalid";
         }
+        return view('paymentStatus', [
+            'success' => false
+        ]);
     }
 
     public function cancel(Request $request)
