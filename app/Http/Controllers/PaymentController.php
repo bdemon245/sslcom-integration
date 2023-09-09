@@ -183,13 +183,17 @@ class PaymentController extends Controller
                     ->where('transaction_id', $tran_id)
                     ->update(['status' => 'Processing']);
 
-                echo "<br >Transaction is successfully Completed";
+                return view('paymentStatus', [
+                    'success' => true
+                ]);
             }
         } else if ($order_details->status == 'Processing' || $order_details->status == 'Complete') {
             /*
              That means through IPN Order status already updated. Now you can just show the customer that transaction is completed. No need to udate database.
              */
-            echo "Transaction is successfully Completed";
+            return view('paymentStatus', [
+                'success' => true
+            ]);
         } else {
             #That means something wrong happened. You can redirect customer to your product page.
             echo "Invalid Transaction";
@@ -211,9 +215,13 @@ class PaymentController extends Controller
             $update_product = DB::table('orders')
                 ->where('transaction_id', $tran_id)
                 ->update(['status' => 'Failed']);
-            echo "Transaction is Falied";
+            return view('paymentStatus', [
+                'success' => false
+            ]);
         } else if ($order_details->status == 'Processing' || $order_details->status == 'Complete') {
-            echo "Transaction is already Successful";
+            return view('paymentStatus', [
+                'success' => true
+            ]);
         } else {
             echo "Transaction is Invalid";
         }
