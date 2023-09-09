@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PaymentController;
+use App\Models\Order;
 use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/orders', function () {
+    $orders = Order::latest()->get();
+    return view('orders', compact('orders'));
+});
 
 
 Route::name('pay.')
@@ -30,4 +35,3 @@ Route::name('pay.')
         Route::post('/cancel', 'cancel')->name('cancel');
         Route::post('/ipn', 'ipn')->name('ipn');
     });
-    // Route::post('ssl-pay', [PaymentController::class, 'index'])->name('ssl.pay');

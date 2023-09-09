@@ -12,10 +12,21 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        .active {
+            background: #4ade80;
+            color: black;
+            border-color: #22c55e;
+        }
+    </style>
 </head>
 
 <body class="h-[100vh] grid items-center">
-    <div class="grid grid-cols-4 justify-center gap-4">
+    <div class="grid grid-cols-4 justify-center gap-4 mb-4">
+        <div class="col-span-4 flex gap-8 justify-center">
+            <a href="/" class="border rounded px-4 py-2 {{url()->current() === url('/') ? 'active' : ''}}">Product</a>
+            <a href="/orders" class="border rounded px-4 py-2 {{url()->current() === url('/orders') ? 'active' : ''}}">Orders</a>
+        </div>
         <div class="col-start-2 col-span-1">
             <img class="rounded aspect-square object-cover" width="90%"
                 src="{{ asset('assets/images/eniko-kis-KsLPTsYaqIQ-unsplash.jpg') }}" alt="">
@@ -23,8 +34,9 @@
         <div class="col-span-1">
             @php
                 $price = 255;
+                $name = 'Polaroid Camera - PLCM245';
             @endphp
-            <h2 class="text-2xl font-bold text-slate-700">Lorem ipsum dolor sit</h2>
+            <h2 class="text-2xl font-bold text-slate-700">{{ $name }}</h2>
             <div class="text-xl font-bold text-green-500">৳ {{ $price }}</div>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit provident necessitatibus modi optio et
                 dicta iure sequi dolorum consequatur magnam voluptate, minus veniam repellat aliquam tenetur incidunt
@@ -51,6 +63,7 @@
                     @csrf
                     <input type="hidden" name="item_count" value="1">
                     <input type="hidden" name="total" value="{{ $price }}">
+                    <input type="hidden" name="product" value="{{ $name }}">
                     <button class="hover:bg-green-600  bg-green-500 rounded p-4 text-lg text-white font-bold w-full">Pay
                         with Nagad</button>
                 </form>

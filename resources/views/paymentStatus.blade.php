@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="refresh" content="5;url=/">
 
     <title>Laravel</title>
 
@@ -14,7 +15,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         .success-animation {
-            margin: 64px auto;
+            margin: 48px auto;
         }
 
         .failure-animation {
@@ -41,7 +42,16 @@
             stroke-dashoffset: 166;
             stroke-width: 2;
             stroke-miterlimit: 10;
-            fill: #fff;
+            fill: #bbf7d0;
+            animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+
+        .checkmark__cross {
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            stroke-width: 2;
+            stroke-miterlimit: 10;
+            fill: #fecaca;
             animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
         }
 
@@ -117,7 +127,7 @@
 
 <body class="h-[100vh] flex flex-col justify-center">
 
-    <div class="w-max mx-auto p-16 border rounded rounded-2">
+    <div class="w-max mx-auto p-16 border rounded rounded-2 shadow {{$success ? 'bg-green-200 border-green-600': 'bg-red-200 border-red-600'}}">
         @if ($success)
             <div class="">
                 <div class="success-animation">
@@ -126,38 +136,47 @@
                         <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
                     </svg>
                 </div>
-                <div class="text-xl font-bold text-blue-500">
+                <div class="text-xl font-bold text-green-600">
                     Payment Successful!
                 </div>
-                <div class="text-sm font-thin text-center">Thank you for choosing us</div>
-                <div class="text-sm font-thin text-center">
-                    <a href="/" style="text-decoration: underline;">Go Back</a>
-                </div>
+                <div class="text-sm font-base text-center">Thank you for choosing us</div>
+
 
             </div>
         @else
             <div>
                 <div class="failure-animation">
                     <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                        <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                        <circle class="checkmark__cross" cx="26" cy="26" r="25" fill="none" />
                         <path class="checkmark_circle" stroke-linecap="round" fill="none"
                             d="M16 16 36 36 M36 16 16 36
                     " />
                     </svg>
                 </div>
-                <div class="text-xl font-bold text-blue-500 text-center">
+                <div class="text-xl font-bold text-red-600 text-center">
                     Payment Failed!
-                </div>
-                <div class="text-center">
-                    <a href='/' class="text-sm font-thin " style="text-decoration: underline;">Go back & try
-                        again</a>
                 </div>
             </div>
         @endif
 
+        <div class="text-center mt-4 text-lg">Redirecting in <span id="count">5</span> seconds...</div>
+
 
 
     </div>
+
+    <script>
+        let count = document.querySelector("#count");
+        let num = parseInt(count.innerHTML)
+        let intervalId = setInterval(() => {
+            count.innerHTML = --num;
+            // stop interval
+            if (num === 0) {
+                clearInterval(intervalId);
+                intervalId = null;
+            }
+        }, 1000);
+    </script>
 
 </body>
 
