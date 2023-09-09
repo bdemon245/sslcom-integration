@@ -21,7 +21,7 @@ Route::get('/', function () {
 
 
 Route::name('pay.')
-->prefix('pay')
+->prefix('/pay')
     ->controller(PaymentController::class)
     ->group(function () {
         Route::post('/', 'index')->name('index');
